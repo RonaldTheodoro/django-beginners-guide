@@ -123,7 +123,7 @@ def reply_posts(request, pk, topic_pk):
             return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
     else:
         form = forms.PostForm()
-    return render(request, 'replay_topic.html', {'topic': topic, 'form': form})
+    return render(request, 'reply_topic.html', {'topic': topic, 'form': form})
 
 
 @method_decorator(login_required, name='dispatch')
