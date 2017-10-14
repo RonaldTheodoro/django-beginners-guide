@@ -1,3 +1,5 @@
+import unittest
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
@@ -30,8 +32,8 @@ class ReplayTopicTestCase(TestCase):
             created_by=user
         )
         self.url = reverse(
-            'reply_topic',
-            kwargs={'pk': self.board.pk, 'board_pk': self.topic.pk}
+            'topic_posts',
+            kwargs={'pk': self.board.pk, 'topic_pk': self.topic.pk}
         )
 
 
@@ -44,7 +46,16 @@ class ReplyTopicTests(ReplayTopicTestCase):
 
 
 class SuccessfulReplyTopicTests(ReplayTopicTestCase):
-    pass
+
+    @unittest.skip
+    def test_redirection(self):
+        url = reverse(
+            'topic_posts',
+            kwargs={'pk': self.board.pk, 'topic_pk': self.topic.pk}
+        )
+        topic_post_url = f'{url}?page=1#2'
+        self.response = self.client.get(url)
+        self.assertRedirects(self.response, topic_post_url)
 
 
 class InvalidReplyTopicTests(ReplayTopicTestCase):

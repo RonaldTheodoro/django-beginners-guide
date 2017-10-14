@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import generic
@@ -127,6 +128,12 @@ def reply_posts(request, pk, topic_pk):
             topic.last_updated = timezone.now()
             topic.save()
 
+            topic_url = reverse(
+                'topic_posts',
+                kwargs={'pk': pk, 'topic_pk': topic_pk}
+            )
+            page = topic.get_page_count()
+            topic_post_url = f'{topic_url}?page={post.pk}#{page}'
             return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
     else:
         form = forms.PostForm()
