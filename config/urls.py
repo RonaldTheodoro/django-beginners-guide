@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^boards/(?P<pk>\d+)/new/$', board_views.new_topic, name='new_topic'),
     url(
         r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$',
-        board_views.topic_posts,
+        board_views.PostListView.as_view(),
         name='topic_posts'
     ),
     url(

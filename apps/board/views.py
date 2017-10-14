@@ -79,10 +79,33 @@ def new_topic(request, pk):
 
 
 def topic_posts(request, pk, topic_pk):
+    """Unused view"""
     topic = get_object_or_404(models.Topic, board__pk=pk, pk=topic_pk)
     topic.views += 1
     topic.save()
     return render(request, 'topic_posts.html', {'topic': topic})
+
+
+class PostListView(generic.ListView):
+    model = models.Post
+    context_object_name = 'posts'
+    template_name = 'topic_posts.html'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        self.topic.views += 1
+        self.topic.save()
+        kwargs['topic'] = self.topic
+        return super().get_context_data(**kwargs)
+
+    def get_queryset(self):
+        self.topic = get_object_or_404(
+            models.Topic,
+            board__pk=self.kwargs.get('pk'),
+            pk=self.kwargs.get('topic_pk')
+        )
+        queryset = self.topic.posts.order_by('created_at')
+        return queryset
 
 
 @login_required
