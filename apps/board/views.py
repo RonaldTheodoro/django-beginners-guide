@@ -10,6 +10,7 @@ from . import forms, models
 
 
 def index(request):
+    """Unused view"""
     context = {'boards': models.Board.objects.all()}
     return render(request, 'index.html', context)
 
@@ -21,6 +22,7 @@ class BoardListView(generic.ListView):
 
 
 def board_topics(request, pk):
+    """Unused view"""
     board = get_object_or_404(models.Board, pk=pk)
     queryset = board.topics.order_by(
         '-last_updated').annotate(replies=Count('posts') - 1)
