@@ -23,7 +23,7 @@ class BoardTopicsTests(TestCase):
 
     def test_board_topics_url_resolves_board_topics_view(self):
         view = resolve('/boards/1/')
-        self.assertEquals(view.func, views.board_topics)
+        self.assertEquals(view.func.view_class, views.TopicListView)
 
     def test_board_topics_view_contains_link_back_to_homepage(self):
         url = reverse('board_topics', kwargs={'pk': 1})

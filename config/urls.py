@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^$', board_views.BoardListView.as_view(), name='index'),
     url(
         r'^boards/(?P<pk>\d+)/$',
-        board_views.board_topics,
+        board_views.TopicListView.as_view(),
         name='board_topics'
     ),
     url(r'^boards/(?P<pk>\d+)/new/$', board_views.new_topic, name='new_topic'),
