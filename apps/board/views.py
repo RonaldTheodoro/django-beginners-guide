@@ -90,7 +90,7 @@ class PostListView(generic.ListView):
     model = models.Post
     context_object_name = 'posts'
     template_name = 'topic_posts.html'
-    paginate_by = 5
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         session_key = f'viewed_topic_{self.topic.pk}'
