@@ -120,6 +120,10 @@ def reply_posts(request, pk, topic_pk):
             post.topic = topic
             post.created_by = request.user
             post.save()
+
+            topic.last_updated = timezone.now()
+            topic.save()
+
             return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
     else:
         form = forms.PostForm()
