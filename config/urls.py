@@ -84,4 +84,9 @@ urlpatterns = [
         ),
         name='password_change_done'
     ),
+    url(
+        r'^settings/account/$',
+        account_views.UserUpdateView.as_view(),
+        name='my_account'
+    ),
 ]
